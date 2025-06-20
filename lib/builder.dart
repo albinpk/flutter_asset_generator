@@ -89,8 +89,13 @@ class ResourceDartBuilder {
   /// Get the asset from yaml list
   List<String> getListFromYamlList(YamlList yamlList) {
     final List<String> list = <String>[];
-    final List<String> r = yamlList.map((dynamic f) => f.toString()).toList();
-    list.addAll(r);
+    for (final dynamic e in yamlList) {
+      if (e is YamlMap && e.containsKey('path')) {
+        list.add(e['path'].toString());
+      } else if (e is String) {
+        list.add(e.toString());
+      }
+    }
     return list;
   }
 
